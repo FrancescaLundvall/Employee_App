@@ -2,7 +2,7 @@
 
 ## Employee Database Application
 
-This is a simple python application to interact with an Employee database. I used flask and SQLAlchemy to connect to a local postgres database
+This is a simple python application to interact with an Employee database. I used flask and SQLAlchemy to connect to a local postgres database. I followed [Parwiz Forogh's tutorial](https://www.youtube.com/watch?v=XTpLbBJTOM4&t=2779s)
 
 ### Requirements
 - Python 3.12.2
