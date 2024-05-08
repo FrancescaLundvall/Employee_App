@@ -11,34 +11,33 @@ import yaml
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.secret_key = "secret key"
-config_file = 'config.yml'
 
-
-# This code checks the credentials in the config file every time a CRUD operation is run, without having to regenerate them every time
-# So its always using the most up to date user but efficiency and cost are not effected
-def load_config():
-    with open('config.yml', 'r') as stream:
-        try:
-            return yaml.safe_load(stream)
-        except yaml.YAMLError as e:
-            print(e)
-            return None
+# PATH = 'database/creds/admin-role'
+PATH = 'database/creds/read-only'
 
 def get_database_credentials():
-    config = load_config()
-    username = config['username']
-    password = config['password']
-    database = config['database']
-    print(f"User: {username}, Password: {password}, Database: {database}")
-    return username, password, database
+    client = hvac.Client(
+        url=os.environ.get("VAULT_ADDR"),
+        token=os.environ.get("VAULT_TOKEN"),
+    )
+    response = client.read(PATH)
+    if response and 'data' in response:
+        secret_data = response['data']
+        username = secret_data['username']
+        password = secret_data['password']
+        print(f"User: {username}, Password:  {password}")
+    
+    return response["data"]["username"], response["data"]["password"]
 
 def get_database_uri():
-    username, password, database = get_database_credentials()
-    database_uri = f'postgresql://{username}:{password}@localhost:5432/{database}'
+    username, password = get_database_credentials()
+    database_uri = f'postgresql://{username}:{password}@localhost:5432/HashiCorpDemo'
     return database_uri
 
+app.secret_key = "secret key"
+
 app.config['SQLALCHEMY_DATABASE_URI'] = get_database_uri() 
+
 db = SQLAlchemy(app)
 
 class Data(db.Model):

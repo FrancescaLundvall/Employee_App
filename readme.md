@@ -13,3 +13,5 @@ This is a simple python application to interact with an Employee database. I use
 - Activate virtual environment 
 - Install requirements from `requirements.txt` with `pip install -r requirements.txt`
 - Update `DATABASE_URI` in `configuration.py` to your own desired URI
+- Create database with desired name
+- In terminal, run `flask shell` then `db.create_all()` to create the Data table

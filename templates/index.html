@@ -9,8 +9,8 @@
     <div cl ass="row">
         <div class="col md-12">
             <div class="jumbotron p-3">
-                	<h2><b>Manage Employees</b> <button type="button" class="btn btn-success float-right"
-                        data-toggle="modal" data-target="#mymodal">Add New Employees</button></h2>
+                	<h2><b>ACME Web Apps</b> <button type="button" class="btn btn-success float-right"
+                        data-toggle="modal" data-target="#mymodal">Add New Application</button></h2>
 
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
@@ -31,30 +31,28 @@
 
                             <th>ID</th>
                             <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
+                            <th>Price</th>
                             <th>Action</th>
 
                         </tr>
                         
-                        {% for row in employees %}
+                        {% for row in applications %}
                         <tr>
                             <td>{{row.id}}</td>
                             <td>{{row.name}}</td>
-                            <td>{{row.email}}</td>
-                            <td>{{row.phone}}</td>
+                            <td>{{row.price}}</td>
                             <td>
                                 <a href="/update/{{row.id}}" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.id}}">Edit</a>
                                 <a href="/delete/{{row.id}}" class="btn btn-danger btn-xs" onclick="return confirm('Are you sure you want to delete user?')">Delete</a>
                             </td>
                         </tr>
 
-                                    <!-- Modal Edit Employee -->
+                                    <!-- Modal Edit Application -->
                         <div id="modaledit{{row.id}}" class="modal fade" role="dialog">
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Update Employee Information</h4>
+                                        <h4 class="modal-title">Update Application Information</h4>
                                     </div>
                                     <div class="modal-body">
                                         <form action="{{url_for('update')}}" method="POST">
@@ -65,17 +63,12 @@
                                             </div>
 
                                             <div class="form-group">
-                                                <label>Email:</label>
-                                                <input type="email" class="form-control" name="email" value="{{row.email}}">
+                                                <label>Price:</label>
+                                                <input type="price" class="form-control" name="price" value="{{row.price}}">
                                             </div>
 
                                             <div class="form-group">
-                                                <label>Phone:</label>
-                                                <input type="number" class="form-control" name="phone" value="{{row.phone}}">
-                                            </div>
-
-                                            <div class="form-group">
-                                                <button class="btn btn-primary" type="submit">Update Employee</button>
+                                                <button class="btn btn-primary" type="submit">Update Application</button>
                                             </div>
                                         </form>
                                     </div>
@@ -92,12 +85,12 @@
                     </table>
             </div>
 
-            <!-- Modal Add Employee -->
+            <!-- Modal Add Application -->
 <div id="mymodal" class="modal fade" role="dialog">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Add Employee</h4>
+                <h4 class="modal-title">Add Application</h4>
             </div>
             <div class="modal-body">
                 <form action="{{url_for('insert')}}" method="POST">
@@ -107,17 +100,12 @@
                     </div>
 
                     <div class="form-group">
-                        <label>Email:</label>
-                        <input type="email" class="form-control" name="email" required="1">
+                        <label>Price:</label>
+                        <input type="price" class="form-control" name="price" required="1">
                     </div>
 
                     <div class="form-group">
-                        <label>Phone:</label>
-                        <input type="number" class="form-control" name="phone" required="1">
-                    </div>
-
-                    <div class="form-group">
-                        <button class="btn btn-primary" type="submit">Add Employee</button>
+                        <button class="btn btn-primary" type="submit">Add Application</button>
                     </div>
                 </form>
             </div>
